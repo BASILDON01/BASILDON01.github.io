@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Профиль разработчика | Developer Profile</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #3b82f6;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-color: #1f2937;
+            --accent-color: #4f46e5;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #3b82f6;
+            --secondary-color: #60a5fa;
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --text-color: #f3f4f6;
+            --accent-color: #6366f1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow-x: hidden;
+            padding: 20px 0;
+        }
+        
+        /* Анимированный фон */
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -2;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            opacity: 0.2;
+            filter: blur(5px);
+        }
+        
+        /* Матричный эффект */
+        .matrix-code {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .code-column {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--primary-color);
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            opacity: 0.1;
+        }
+        
+        .card-container {
+            width: 90%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .profile-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            z-index: 1;
+            animation: cardAppear 0.8s ease-out;
+        }
+        
+        @keyframes cardAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            z-index: 5;
+            gap: 10px;
+        }
+
+        .theme-toggle {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px var(--primary-color);
+        }
+
+        .language-switcher {
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-color);
+            border-radius: 30px;
+            padding: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .lang-btn {
+            padding: 5px 10px;
+            border: none;
+            background: none;
+            color: var(--text-color);
+            cursor: pointer;
+            border-radius: 20px;
+            font-weight: 500;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        
+        .lang-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            opacity: 1;
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 12px;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+            font-weight: 700;
+            margin-right: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            animation: avatarPulse 3s infinite alternate;
+        }
+        
+        @keyframes avatarPulse {
+            0% {
+                box-shadow: 0 5px 15px rgba(37, 99, 235, 0.2);
+            }
+            100% {
+                box-shadow: 0 5px 25px rgba(37, 99, 235, 0.5);
+            }
+        }
+        
+        .avatar::after {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: rotate(45deg);
+            top: -40%;
+            left: -100%;
+            animation: avatarShine 3s ease-in-out infinite;
+        }
+        
+        @keyframes avatarShine {
+            0% {
+                left: -100%;
+            }
+            20%, 100% {
+                left: 100%;
+            }
+        }
+        
+        .user-info {
+            flex: 1;
+            animation: fadeInUp 1s forwards;
+        }
+        
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .name {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .title {
+            font-size: 18px;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+        
+        .location {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+        
+        .location i {
+            margin-right: 5px;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            position: relative;
+            font-weight: 500;
+            color: var(--text-color);
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            color: var(--primary-color);
+            opacity: 1;
+        }
+        
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        
+        .about {
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .projects-header {
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: var(--bg-color);
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .projects-header h3 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+            font-size: 18px;
+        }
+        
+        .projects-header p {
+            line-height: 1.5;
+            font-size: 14px;
+        }
+        
+        .projects-header a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .projects-header a:hover {
+            text-decoration: underline;
+        }
+        
+        .skill-set {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .skill {
+            background-color: var(--bg-color);
+            color: var(--primary-color);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .skill::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: all 0.5s ease;
+        }
+        
+        .skill:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .skill:hover::before {
+            left: 100%;
+        }
+        
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .project-card {
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 0;
+            background-color: var(--primary-color);
+            transition: height 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .project-card:hover::before {
+            height: 100%;
+        }
+        
+        .project-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+            display: block;
+            text-decoration: none;
+        }
+        
+        .project-title:hover {
+            text-decoration: underline;
+        }
+        
+        .project-desc {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .tech-tag {
+            background-color: var(--card-bg);
+            color: var(--accent-color);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .contact-link {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: var(--bg-color);
+            border-radius: 30px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .contact-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-color);
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+        
+        .contact-link:hover {
+            color: white;
+        }
+        
+        .contact-link:hover::before {
+            left: 0;
+        }
+        
+        .contact-link i {
+            margin-right: 8px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+        
+        /* Подсветка фона */
+        .glow {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.15;
+            z-index: -1;
+            background-color: var(--primary-color);
+            animation: pulse 5s infinite alternate;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.05;
+            }
+            100% {
+                transform: scale(1.2);
+                opacity: 0.2;
+            }
+        }
+
+        /* Языковые элементы */
+        [data-lang="en"] .lang-ru,
+        [data-lang="ru"] .lang-en {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .controls {
+                top: 10px;
+                right: 10px;
+                flex-direction: column;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .avatar {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .tabs {
+                overflow-x: auto;
+                white-space: nowrap;
+                padding-bottom: 5px;
+                justify-content: center;
+            }
+            
+            .projects {
+                grid-template-columns: 1fr;
+            }
+            
+            .location {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body data-lang="ru">
+    <!-- Анимированный фон -->
+    <div class="animated-background" id="background"></div>
+    
+    <!-- Матричный эффект -->
+    <div class="matrix-code" id="matrix"></div>
+    
+    <!-- Подсветка фона -->
+    <div class="glow" style="width:300px; height:300px; top:20%; left:20%;"></div>
+    <div class="glow" style="width:250px; height:250px; bottom:20%; right:20%; background-color: var(--accent-color);"></div>
+    
+    <div class="card-container">
+        <div class="profile-card">
+            <div class="controls">
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="ru">RUS</button>
+                    <button class="lang-btn" data-lang="en">ENG</button>
+                </div>
+                <button class="theme-toggle" id="themeToggle">🌙</button>
+            </div>
+            
+            <div class="header">
+                <div class="avatar">DEV</div>
+                <div class="user-info">
+                    <h1 class="name">
+                        <span class="lang-ru">Разработчик</span>
+                        <span class="lang-en">Developer</span>
+                    </h1>
+                    <div class="title">Full-Stack Developer</div>
+                    <div class="location">
+                        <i>📍</i> 
+                        <span class="lang-ru">Калифорния, США</span>
+                        <span class="lang-en">California, USA</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tabs">
+                <div class="tab active" data-tab="about">
+                    <span class="lang-ru">О себе</span>
+                    <span class="lang-en">About</span>
+                </div>
+                <div class="tab" data-tab="skills">
+                    <span class="lang-ru">Навыки</span>
+                    <span class="lang-en">Skills</span>
+                </div>
+                <div class="tab" data-tab="projects">
+                    <span class="lang-ru">Проекты</span>
+                    <span class="lang-en">Projects</span>
+                </div>
+                <div class="tab" data-tab="contact">
+                    <span class="lang-ru">Контакты</span>
+                    <span class="lang-en">Contact</span>
+                </div>
+            </div>
+            
+            <div class="tab-content active" id="about">
+                <!-- Русская версия -->
+                <div class="lang-ru">
+                    <p class="about">
+                        Привет! Я Full-Stack разработчик с фокусом на создании высококачественных веб-приложений.
+                        Специализируюсь на разработке как клиентской, так и серверной части приложений, обеспечивая
+                        полный цикл разработки от проектирования до внедрения.
+                    </p>
+                    <p class="about">
+                        Мой подход сочетает техническое мастерство с глубоким пониманием потребностей пользователей.
+                        Я стремлюсь создавать элегантные, производительные и масштабируемые решения, которые
+                        решают реальные проблемы бизнеса и пользователей.
+                    </p>
+                    <p class="about">
+                        Я постоянно изучаю новые технологии и методологии,
+                        чтобы оставаться на передовой в быстро меняющемся мире разработки.
+                    </p>
+                </div>
+                
+                <!-- Английская версия -->
+                <div class="lang-en">
+                    <p class="about">
+                        Hello! I'm a Full-Stack Developer focused on creating high-quality web applications. 
+                        I specialize in both frontend and backend development, ensuring a complete 
+                        development cycle from design to implementation.
+                    </p>
+                    <p class="about">
+                        My approach combines technical expertise with a deep understanding of user needs. 
+                        I strive to create elegant, performant, and scalable solutions that solve 
+                        real business and user problems.
+                    </p>
+                    <p class="about">
+                        I continuously learn new technologies and methodologies to stay at the 
+                        forefront of the rapidly evolving development world.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="skills">
+                <!-- Русская версия -->
+                <div class="lang-ru">
+                    <h3 style="margin-bottom: 15px;">Технические навыки</h3>
+                    <div class="skill-set">
+                        <div class="skill">JavaScript</div>
+                        <div class="skill">TypeScript</div>
+                        <div class="skill">Python</div>
+                        <div class="skill">React</div>
+                        <div class="skill">Node.js</div>
+                        <div class="skill">Express</div>
+                        <div class="skill">MongoDB</div>
+                        <div class="skill">PostgreSQL</div>
+                        <div class="skill">Redux</div>
+                        <div class="skill">HTML/CSS</div>
+                        <div class="skill">Git</div>
+                        <div class="skill">Docker</div>
+                        <div class="skill">AWS</div>
+                        <div class="skill">TensorFlow</div>
+                    </div>
+                    
+                    <h3 style="margin-bottom: 15px; margin-top: 25px;">Иностранные языки</h3>
+                    <div class="skill-set">
+                        <div class="skill">Русский (родной)</div>
+                        <div class="skill">Английский (C1)</div>
+                    </div>
+                </div>
+                
+                <!-- Английская версия -->
+                <div class="lang-en">
+                    <h3 style="margin-bottom: 15px;">Technical Skills</h3>
+                    <div class="skill-set">
+                        <div class="skill">JavaScript</div>
+                        <div class="skill">TypeScript</div>
+                        <div class="skill">Python</div>
+                        <div class="skill">React</div>
+                        <div class="skill">Node.js</div>
+                        <div class="skill">Express</div>
+                        <div class="skill">MongoDB</div>
+                        <div class="skill">PostgreSQL</div>
+                        <div class="skill">Redux</div>
+                        <div class="skill">HTML/CSS</div>
+                        <div class="skill">Git</div>
+                        <div class="skill">Docker</div>
+                        <div class="skill">AWS</div>
+                        <div class="skill">TensorFlow</div>
+                    </div>
+                    
+                    <h3 style="margin-bottom: 15px; margin-top: 25px;">Languages</h3>
+                    <div class="skill-set">
+                        <div class="skill">Russian (Native)</div>
+                        <div class="skill">English (C1)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="projects">
+                <!-- Русская версия информации о группе проектов -->
+                <div class="lang-ru">
+                    <div class="projects-header">
+                        <h3><a href="https://t.me/MyProekt01" target="_blank" style="text-decoration: none; color: var(--primary-color);">Мои проекты</a></h3>
+                        <p>Все мои нынешние и будущие проекты находятся и будут находиться в <a href="https://t.me/MyProekt01" target="_blank">данной группе</a></p>
+                    </div>
+                    
+                    <div class="projects">
+                        <div class="project-card">
+                            <a href="https://t.me/+PImBGoaEOKJjY2Ey" class="project-title" target="_blank">CHECKER PLASE ROBLOX</a>
+                            <div class="project-desc">
+                                Лучший чекер в своей сфере для платформы Roblox. Инновационное решение для проверки данных, находится в активной разработке. Скоро выйдет BETA версия с расширенным функционалом.
+                            </div>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Telegram API</span>
+                                <span class="tech-tag">Roblox API</span>
+                                <span class="tech-tag">API Integration</span>
+                            </div>
+                        </div>
+                        
+                        <div class="project-card">
+                            <a href="https://t.me/+6C3fZKBUC4xiNDVi" class="project-title" target="_blank">BRUT ROBLOX ACCOUNT</a>
+                            <div class="project-desc">
+                                Специализированная программа для автоматизации подбора паролей для аккаунтов Roblox. Многопоточное решение с гибкими настройками и высокой производительностью.
+                            </div>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Multi-threading</span>
+                                <span class="tech-tag">Roblox API</span>
+                                <span class="tech-tag">Security</span>
+                            </div>
+                        </div>
+                        
+                        <div class="project-card">
+                            <a href="https://t.me/+OMOVcz0B5TJmYzc6" class="project-title" target="_blank">Duel - Telegram Bot</a>
+                            <div class="project-desc">
+                                Уникальный бот с системой дуэлей для Telegram. Предоставляет пользователям увлекательный игровой опыт с соревновательным элементом и системой рейтингов.
+                            </div>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Telegram Bot API</span>
+                                <span class="tech-tag">Game Mechanics</span>
+                                <span class="tech-tag">Rating System</span>
+                            </div>
+                        </div>
+                        
+                        <div class="project-card">
+                            <a href="https://t.me/+bHikU2R1VU5kOTI6" class="project-title" target="_blank">AutoSMS</a>
+                            <div class="project-desc">
+                                Автоматизированная система для отправки и управления SMS-сообщениями. Позволяет настраивать массовую рассылку, создавать шаблоны и отслеживать статус доставки.
+                            </div>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Twilio API</span>
+                                <span class="tech-tag">SMS Gateway</span>
+                                <span class="tech-tag">Automation</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Английская версия информации о группе проектов -->
+                <div class="lang-en">
+                    <div class="projects-header">
+                        <h3><a href="https://t.me/MyProekt01" target="_blank" style="text-decoration: none; color: var(--primary-color);">My Projects</a></h3>
+                        <p>All my current and future projects are and will be located in <a href="https://t.me/MyProekt01" target="_blank">this group</a></p>
+                    </div>
+                
+                    <div class="projects">
+                        <div class="project-card">
+                            <a href="https://t.me/+PImBGoaEOKJjY2Ey" class="project-title" target="_blank">CHECKER PLASE ROBLOX</a>
+                            <div class="project-desc">
+                                The best checker in its field for the Roblox platform. An innovative solution for data verification, currently in active development. BETA version with expanded functionality coming soon.
+                            </div>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Telegram API</span>
+                                <span class="tech-tag">Roblox API</span>
+                                <span class="tech-tag">API Integration</span>
+                            </div>
+                        </div>
+                        
+                        <div class="project-card">
+                            <a href="https://t.me/+6C3fZKBUC4xiNDVi" class="project-title" target="_blank">BRUT ROBLOX ACCOUNT</a>
+                            <div class="project-desc">
+                                Specialized program for automating password selection for Roblox accounts. A multi-threaded solution with flexible settings and high performance.
+                            </div>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Multi-threading</span>
+                                <span class="tech-tag">Roblox API</span>
+                                <span class="tech-tag">Security</span>
+                            </div>
+                        </div>
+                        
+                        <div class="project-card">
+                            <a href="https://t.me/+OMOVcz0B5TJmYzc6" class="project-title" target="_blank">Duel - Telegram Bot</a>
+                            <div class="project-desc">
+                                Unique bot with a duel system for Telegram. Provides users with an exciting gaming experience with a competitive element and rating system.
+                            </div>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Telegram Bot API</span>
+                                <span class="tech-tag">Game Mechanics</span>
+                                <span class="tech-tag">Rating System</span>
+                            </div>
+                        </div>
+                        
+                        <div class="project-card">
+                            <a href="https://t.me/+bHikU2R1VU5kOTI6" class="project-title" target="_blank">AutoSMS</a>
+                            <div class="project-desc">
+                                Automated system for sending and managing SMS messages. Allows setting up mass messaging, creating templates, and tracking delivery status.
+                            </div>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Twilio API</span>
+                                <span class="tech-tag">SMS Gateway</span>
+                                <span class="tech-tag">Automation</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="contact">
+                <div class="contact-links">
+                    <a href="https://t.me/Basildon01" class="contact-link" target="_blank">
+                        <i>📱</i> @Basildon01
+                    </a>
+                    <a href="https://t.me/MyProekt01" class="contact-link" target="_blank">
+                        <i>📁</i> 
+                        <span class="lang-ru">Мои проекты</span>
+                        <span class="lang-en">My Projects</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <span class="lang-ru">© 2025 • Разработчик • Все права защищены</span>
+            <span class="lang-en">© 2025 • Developer • All rights reserved</span>
+        </div>
+    </div>
+
+    <script>
+        // Генерация фоновых частиц
+        function generateParticles() {
+            const background = document.getElementById('background');
+            const particleCount = 15;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const size = Math.random() * 100 + 50;
+                const particle = document.createElement('div');
+                
+                particle.className = 'particle';
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // Анимация для каждой частицы
+                const duration = Math.random() * 15 + 10;
+                const xMove = Math.random() * 40 - 20;
+                const yMove = Math.random() * 40 - 20;
+                
+                particle.style.animation = `moveParticle${i} ${duration}s infinite alternate ease-in-out`;
+                particle.style.opacity = Math.random() * 0.2 + 0.1;
+                
+                // Создаем уникальную анимацию для каждой частицы
+                const keyframes = `
+                    @keyframes moveParticle${i} {
+                        0% {
+                            transform: translate(0, 0);
+                        }
+                        100% {
+                            transform: translate(${xMove}vw, ${yMove}vh);
+                        }
+                    }
+                `;
+                
+                const style = document.createElement('style');
+                style.textContent = keyframes;
+                document.head.appendChild(style);
+                
+                background.appendChild(particle);
+            }
+        }
+        
+        // Генерация матричного эффекта
+        function generateMatrix() {
+            const matrix = document.getElementById('matrix');
+            const columnCount = Math.floor(window.innerWidth / 25);
+            
+            for (let i = 0; i < columnCount; i++) {
+                const column = document.createElement('div');
+                column.className = 'code-column';
+                
+                const height = Math.floor(Math.random() * 20) + 5;
+                const speed = Math.random() * 10 + 5;
+                
+                column.style.left = `${i * 25}px`;
+                column.style.animation = `fallDown${i} ${speed}s infinite linear`;
+                column.style.animationDelay = `${Math.random() * 5}s`;
+                
+                // Создаем уникальную анимацию падения для каждой колонки
+                const keyframes = `
+                    @keyframes fallDown${i} {
+                        0% {
+                            transform: translateY(-100%);
+                        }
+                        100% {
+                            transform: translateY(${window.innerHeight}px);
+                        }
+                    }
+                `;
+                
+                const style = document.createElement('style');
+                style.textContent = keyframes;
+                document.head.appendChild(style);
+                
+                // Добавляем символы
+                for (let j = 0; j < height; j++) {
+                    const char = document.createElement('div');
+                    char.textContent = Math.random() > 0.5 ? '1' : '0';
+                    column.appendChild(char);
+                }
+                
+                matrix.appendChild(column);
+            }
+        }
+        
+        // Анимации для элементов навыков
+        function animateSkills() {
+            const skills = document.querySelectorAll('.skill');
+            skills.forEach((skill, index) => {
+                skill.style.opacity = '0';
+                skill.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    skill.style.opacity = '1';
+                    skill.style.transform = 'translateY(0)';
+                }, 100 + index * 50);
+            });
+        }
+        
+        // Анимации для карточек проектов
+        function animateProjects() {
+            const projects = document.querySelectorAll('.project-card');
+            projects.forEach((project, index) => {
+                project.style.opacity = '0';
+                project.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    project.style.opacity = '1';
+                    project.style.transform = 'translateY(0)';
+                }, 100 + index * 100);
+            });
+        }
+        
+        // Переключение между вкладками
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Получаем идентификатор вкладки
+                const tabId = tab.getAttribute('data-tab');
+                
+                // Если это не вкладка проектов, выполняем стандартное переключение
+                if (tabId !== 'projects') {
+                    // Удаляем активный класс со всех вкладок
+                    tabs.forEach(t => t.classList.remove('active'));
+                    // Добавляем активный класс выбранной вкладке
+                    tab.classList.add('active');
+                    
+                    // Удаляем активный класс со всех контентов
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Добавляем активный класс соответствующему контенту
+                    document.getElementById(tabId).classList.add('active');
+                    
+                    // Анимируем содержимое вкладки
+                    if (tabId === 'skills') {
+                        animateSkills();
+                    }
+                }
+                // Если это вкладка проектов, показываем содержимое без перехода по ссылке
+                else {
+                    // Удаляем активный класс со всех вкладок
+                    tabs.forEach(t => t.classList.remove('active'));
+                    // Добавляем активный класс выбранной вкладке
+                    tab.classList.add('active');
+                    
+                    // Удаляем активный класс со всех контентов
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Добавляем активный класс соответствующему контенту
+                    document.getElementById(tabId).classList.add('active');
+                    
+                    // Анимируем проекты
+                    animateProjects();
+                }
+            });
+        });
+        
+        // Переключение темы
+        const themeToggle = document.getElementById('themeToggle');
+        let isDarkTheme = false;
+        
+        themeToggle.addEventListener('click', () => {
+            isDarkTheme = !isDarkTheme;
+            if (isDarkTheme) {
+                document.body.setAttribute('data-theme', 'dark');
+                themeToggle.textContent = '☀️';
+            } else {
+                document.body.removeAttribute('data-theme');
+                themeToggle.textContent = '🌙';
+            }
+        });
+        
+        // Переключение языка
+        const langButtons = document.querySelectorAll('.lang-btn');
+        
+        langButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const lang = button.getAttribute('data-lang');
+                
+                // Обновляем активную кнопку
+                langButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                // Обновляем язык на странице
+                document.body.setAttribute('data-lang', lang);
+                
+                // Обновляем название вкладки браузера
+                if (lang === 'ru') {
+                    document.title = 'Профиль разработчика';
+                } else {
+                    document.title = 'Developer Profile';
+                }
+            });
+        });
+        
+        // Инициализация
+        window.addEventListener('load', () => {
+            generateParticles();
+            generateMatrix();
+            animateSkills();
+            animateProjects();
+        });
+    </script>
+</body>
+</html>
