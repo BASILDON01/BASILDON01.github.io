@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Профиль разработчика</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #3b82f6;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-color: #1f2937;
+            --accent-color: #4f46e5;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #3b82f6;
+            --secondary-color: #60a5fa;
+            --bg-color: #111827;
+            --card-bg: #1f2937;
+            --text-color: #f3f4f6;
+            --accent-color: #6366f1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .card-container {
+            width: 90%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .profile-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 12px;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+            font-weight: 700;
+            margin-right: 30px;
+        }
+        
+        .user-info {
+            flex: 1;
+        }
+        
+        .name {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .title {
+            font-size: 18px;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+        
+        .location {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+        
+        .location i {
+            margin-right: 5px;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            position: relative;
+            font-weight: 500;
+            color: var(--text-color);
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            color: var(--primary-color);
+            opacity: 1;
+        }
+        
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .about {
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .skill-set {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .skill {
+            background-color: var(--bg-color);
+            color: var(--primary-color);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .project-card {
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .project-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .project-desc {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .tech-tag {
+            background-color: var(--card-bg);
+            color: var(--accent-color);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .contact-link {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: var(--bg-color);
+            border-radius: 30px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-link:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .contact-link i {
+            margin-right: 8px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .avatar {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .tabs {
+                overflow-x: auto;
+                white-space: nowrap;
+                padding-bottom: 5px;
+            }
+            
+            .projects {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="profile-card">
+            <button class="theme-toggle" id="themeToggle">🌙</button>
+            
+            <div class="header">
+                <div class="avatar">DEV</div>
+                <div class="user-info">
+                    <h1 class="name">Разработчик</h1>
+                    <div class="title">Full-Stack Developer</div>
+                    <div class="location">
+                        <i>📍</i> Калифорния, США
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tabs">
+                <div class="tab active" data-tab="about">О себе</div>
+                <div class="tab" data-tab="skills">Навыки</div>
+                <div class="tab" data-tab="projects">Проекты</div>
+                <div class="tab" data-tab="contact">Контакты</div>
+            </div>
+            
+            <div class="tab-content active" id="about">
+                <p class="about">
+                    Привет! Я Full-Stack разработчик с фокусом на создании высококачественных веб-приложений.
+                    Специализируюсь на разработке как клиентской, так и серверной части приложений, обеспечивая
+                    полный цикл разработки от проектирования до внедрения.
+                </p>
+                <p class="about">
+                    Мой подход сочетает техническое мастерство с глубоким пониманием потребностей пользователей.
+                    Я стремлюсь создавать элегантные, производительные и масштабируемые решения, которые
+                    решают реальные проблемы бизнеса и пользователей.
+                </p>
+                <p class="about">
+                    Я постоянно изучаю новые технологии и методологии,
+                    чтобы оставаться на передовой в быстро меняющемся мире разработки.
+                </p>
+            </div>
+            
+            <div class="tab-content" id="skills">
+                <h3 style="margin-bottom: 15px;">Технические навыки</h3>
+                <div class="skill-set">
+                    <div class="skill">JavaScript</div>
+                    <div class="skill">TypeScript</div>
+                    <div class="skill">Python</div>
+                    <div class="skill">React</div>
+                    <div class="skill">Node.js</div>
+                    <div class="skill">Express</div>
+                    <div class="skill">MongoDB</div>
+                    <div class="skill">PostgreSQL</div>
+                    <div class="skill">Redux</div>
+                    <div class="skill">HTML/CSS</div>
+                    <div class="skill">Git</div>
+                    <div class="skill">Docker</div>
+                    <div class="skill">AWS</div>
+                    <div class="skill">TensorFlow</div>
+                </div>
+                
+                <h3 style="margin-bottom: 15px; margin-top: 25px;">Иностранные языки</h3>
+                <div class="skill-set">
+                    <div class="skill">Русский (родной)</div>
+                    <div class="skill">Английский (C1)</div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="projects">
+                <div class="projects">
+                    <div class="project-card">
+                        <div class="project-title">CHECKER PLASE ROBLOX</div>
+                        <div class="project-desc">
+                            Лучший чекер в своей сфере для платформы Roblox. Инновационное решение для проверки данных, находится в активной разработке. Скоро выйдет BETA версия с расширенным функционалом.
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Telegram API</span>
+                            <span class="tech-tag">Roblox API</span>
+                            <span class="tech-tag">API Integration</span>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <div class="project-title">BRUT ROBLOX ACCOUNT</div>
+                        <div class="project-desc">
+                            Специализированная программа для автоматизации подбора паролей для аккаунтов Roblox. Многопоточное решение с гибкими настройками и высокой производительностью.
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Multi-threading</span>
+                            <span class="tech-tag">Roblox API</span>
+                            <span class="tech-tag">Security</span>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <div class="project-title">Duel - Telegram Bot</div>
+                        <div class="project-desc">
+                            Уникальный бот с системой дуэлей для Telegram. Предоставляет пользователям увлекательный игровой опыт с соревновательным элементом и системой рейтингов.
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Telegram Bot API</span>
+                            <span class="tech-tag">Game Mechanics</span>
+                            <span class="tech-tag">Rating System</span>
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <div class="project-title">AutoSMS</div>
+                        <div class="project-desc">
+                            Автоматизированная система для отправки и управления SMS-сообщениями. Позволяет настраивать массовую рассылку, создавать шаблоны и отслеживать статус доставки.
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Twilio API</span>
+                            <span class="tech-tag">SMS Gateway</span>
+                            <span class="tech-tag">Automation</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="contact">
+                <div class="contact-links">
+                    <a href="https://t.me/Basildon01" class="contact-link" target="_blank">
+                        <i>📱</i> @Basildon01
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            © 2025 • Разработчик • Все права защищены
+        </div>
+    </div>
+
+    <script>
+        // Переключение между вкладками
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Удаляем активный класс со всех вкладок
+                tabs.forEach(t => t.classList.remove('active'));
+                // Добавляем активный класс выбранной вкладке
+                tab.classList.add('active');
+                
+                // Удаляем активный класс со всех контентов
+                const tabContents = document.querySelectorAll('.tab-content');
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Добавляем активный класс соответствующему контенту
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Переключение темы
+        const themeToggle = document.getElementById('themeToggle');
+        let isDarkTheme = false;
+        
+        themeToggle.addEventListener('click', () => {
+            isDarkTheme = !isDarkTheme;
+            if (isDarkTheme) {
+                document.body.setAttribute('data-theme', 'dark');
+                themeToggle.textContent = '☀️';
+            } else {
+                document.body.removeAttribute('data-theme');
+                themeToggle.textContent = '🌙';
+            }
+        });
+
+        // Анимация появления проектов
+        const projectCards = document.querySelectorAll('.project-card');
+        let delay = 0;
+        projectCards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                card.style.transition = 'all 0.5s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, delay);
+            
+            delay += 100;
+        });
+
+        // Анимация элементов навыков
+        const skills = document.querySelectorAll('.skill');
+        delay = 0;
+        skills.forEach(skill => {
+            skill.style.opacity = '0';
+            skill.style.transform = 'scale(0.8)';
+            
+            setTimeout(() => {
+                skill.style.transition = 'all 0.3s ease';
+                skill.style.opacity = '1';
+                skill.style.transform = 'scale(1)';
+            }, delay);
+            
+            delay += 50;
+        });
+    </script>
+</body>
+</html>
