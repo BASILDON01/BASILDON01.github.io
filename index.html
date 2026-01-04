@@ -12,6 +12,9 @@
             --card-bg: #ffffff;
             --text-color: #1f2937;
             --accent-color: #4f46e5;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
         }
 
         [data-theme="dark"] {
@@ -41,6 +44,89 @@
             position: relative;
             overflow-x: hidden;
             padding: 20px 0;
+        }
+
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .preloader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--bg-color);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            z-index: 9998;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            transform: scale(1.1);
         }
         
         .animated-background {
@@ -84,7 +170,7 @@
         
         .card-container {
             width: 90%;
-            max-width: 800px;
+            max-width: 900px;
             display: flex;
             flex-direction: column;
         }
@@ -102,14 +188,8 @@
         }
         
         @keyframes cardAppear {
-            0% {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         .controls {
@@ -175,24 +255,27 @@
             opacity: 1;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
+
+        
         
         .header {
             display: flex;
             align-items: center;
             margin-bottom: 30px;
             flex-wrap: wrap;
+            margin-top: 30px;
         }
         
         .avatar {
             width: 120px;
             height: 120px;
             border-radius: 12px;
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 48px;
+            font-size: 42px;
             font-weight: 700;
             margin-right: 30px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -202,12 +285,8 @@
         }
         
         @keyframes avatarPulse {
-            0% {
-                box-shadow: 0 5px 15px rgba(37, 99, 235, 0.2);
-            }
-            100% {
-                box-shadow: 0 5px 25px rgba(37, 99, 235, 0.5);
-            }
+            0% { box-shadow: 0 5px 15px rgba(37, 99, 235, 0.2); }
+            100% { box-shadow: 0 5px 25px rgba(37, 99, 235, 0.5); }
         }
         
         .avatar::after {
@@ -223,12 +302,8 @@
         }
         
         @keyframes avatarShine {
-            0% {
-                left: -100%;
-            }
-            20%, 100% {
-                left: 100%;
-            }
+            0% { left: -100%; }
+            20%, 100% { left: 100%; }
         }
         
         .user-info {
@@ -237,14 +312,8 @@
         }
         
         @keyframes fadeInUp {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
         
         .name {
@@ -276,6 +345,7 @@
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
             position: relative;
+            flex-wrap: wrap;
         }
         
         .tab-indicator {
@@ -288,7 +358,7 @@
         }
         
         .tab {
-            padding: 10px 20px;
+            padding: 10px 15px;
             cursor: pointer;
             position: relative;
             font-weight: 500;
@@ -297,6 +367,7 @@
             transition: all 0.3s ease;
             overflow: hidden;
             transform-origin: center bottom;
+            font-size: 14px;
         }
         
         .tab:hover {
@@ -315,10 +386,7 @@
         }
         
         @keyframes ripple {
-            to {
-                transform: scale(2.5);
-                opacity: 0;
-            }
+            to { transform: scale(2.5); opacity: 0; }
         }
         
         .tab.active {
@@ -328,9 +396,9 @@
         }
         
         @keyframes tabBounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-8px);}
-            60% {transform: translateY(-4px);}
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-8px); }
+            60% { transform: translateY(-4px); }
         }
         
         .tab.active::after {
@@ -347,17 +415,45 @@
         }
         
         @keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
+            0% { opacity: 0; }
+            100% { opacity: 1; }
         }
         
         .about {
             line-height: 1.6;
             margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: var(--bg-color);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            opacity: 0.8;
         }
         
         .projects-header {
@@ -388,6 +484,30 @@
         
         .projects-header a:hover {
             text-decoration: underline;
+        }
+
+        .filter-container {
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .filter-btn {
+            padding: 6px 14px;
+            border: 1px solid var(--border-color, rgba(0,0,0,0.1));
+            background: var(--card-bg);
+            color: var(--text-color);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
         }
         
         .skill-set {
@@ -433,7 +553,7 @@
         
         .projects {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
         }
         
@@ -445,6 +565,7 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
         
         .project-card::before {
@@ -466,9 +587,40 @@
         .project-card:hover::before {
             height: 100%;
         }
+
+        .project-status {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-active {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success-color);
+        }
+
+        .status-active {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning-color);
+        }
+
+        .status-active {
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--accent-color);
+        }
+
+        .project-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
         
         .project-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             margin-bottom: 10px;
             color: var(--primary-color);
@@ -481,7 +633,7 @@
         }
         
         .project-desc {
-            font-size: 14px;
+            font-size: 13px;
             line-height: 1.5;
             margin-bottom: 15px;
         }
@@ -489,7 +641,7 @@
         .project-tech {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 6px;
         }
         
         .tech-tag {
@@ -497,8 +649,234 @@
             color: var(--accent-color);
             padding: 4px 8px;
             border-radius: 4px;
-            font-size: 12px;
+            font-size: 11px;
             transition: all 0.3s ease;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 16px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        .modal-close:hover {
+            opacity: 1;
+        }
+
+        .modal-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .modal-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .modal-desc {
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .modal-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        
+
+        .faq-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .faq-item {
+            background: var(--bg-color);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: var(--primary-color);
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 20px;
+            line-height: 1.6;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            padding: 0 20px 15px;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .pricing-card {
+            background: var(--bg-color);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .pricing-card.popular {
+            border: 2px solid var(--primary-color);
+        }
+
+        .pricing-card.popular::before {
+            content: '⭐ Popular';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-color);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .pricing-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .pricing-price {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .pricing-period {
+            font-size: 13px;
+            opacity: 0.7;
+            margin-bottom: 20px;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .pricing-features li {
+            padding: 8px 0;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            color: var(--success-color);
+            font-weight: 700;
+        }
+
+        .pricing-btn {
+            display: block;
+            padding: 12px;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-btn:hover {
+            opacity: 0.9;
         }
         
         .contact-links {
@@ -545,6 +923,21 @@
         .contact-link i {
             margin-right: 8px;
         }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            margin-left: 8px;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
         
         .footer {
             text-align: center;
@@ -565,14 +958,8 @@
         }
         
         @keyframes pulse {
-            0% {
-                transform: scale(1);
-                opacity: 0.05;
-            }
-            100% {
-                transform: scale(1.2);
-                opacity: 0.2;
-            }
+            0% { transform: scale(1); opacity: 0.05; }
+            100% { transform: scale(1.2); opacity: 0.2; }
         }
 
         [data-lang="en"] .lang-ru,
@@ -581,9 +968,7 @@
         }
         
         @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
+            body { padding: 10px; }
             
             .controls {
                 position: relative;
@@ -617,14 +1002,12 @@
                 -ms-overflow-style: none;
             }
             
-            .tabs::-webkit-scrollbar {
-                display: none;
-            }
+            .tabs::-webkit-scrollbar { display: none; }
             
             .tab {
                 flex: 0 0 auto;
-                padding: 10px 15px;
-                font-size: 14px;
+                padding: 10px 12px;
+                font-size: 13px;
             }
             
             .tab-indicator {
@@ -632,28 +1015,47 @@
                 height: 2px;
             }
             
-            .projects {
-                grid-template-columns: 1fr;
-            }
-            
-            .location {
-                justify-content: center;
+            .projects { grid-template-columns: 1fr; }
+            .pricing-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .location { justify-content: center; }
+
+            .scroll-top {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
             }
         }
         
         @media (max-width: 380px) {
-            .tab {
-                padding: 8px 12px;
-                font-size: 13px;
-            }
-            
-            .profile-card {
-                padding: 20px 15px;
-            }
+            .tab { padding: 8px 10px; font-size: 12px; }
+            .profile-card { padding: 20px 15px; }
         }
     </style>
 </head>
 <body data-lang="ru">
+    <div class="preloader" id="preloader">
+        <div class="preloader-spinner"></div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <button class="scroll-top" id="scrollTop">↑</button>
+
+    <div class="modal" id="projectModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div class="modal-icon" id="modalIcon"></div>
+            <h3 class="modal-title" id="modalTitle"></h3>
+            <p class="modal-desc" id="modalDesc"></p>
+            <a href="#" class="modal-btn" id="modalLink" target="_blank">
+                <span class="lang-ru">Перейти к проекту</span>
+                <span class="lang-en">Go to project</span>
+            </a>
+        </div>
+    </div>
+
     <div class="animated-background" id="background"></div>
     <div class="matrix-code" id="matrix"></div>
     <div class="glow" style="width:300px; height:300px; top:20%; left:20%;"></div>
@@ -661,6 +1063,8 @@
     
     <div class="card-container">
         <div class="profile-card">
+            
+
             <div class="controls">
                 <div class="language-switcher">
                     <button class="lang-btn active" data-lang="ru">RUS</button>
@@ -670,7 +1074,7 @@
             </div>
             
             <div class="header">
-                <div class="avatar">DEV</div>
+                <div class="avatar">👨‍💻</div>
                 <div class="user-info">
                     <h1 class="name">
                         <span class="lang-ru">Разработчик</span>
@@ -682,6 +1086,7 @@
                         <span class="lang-ru">Калифорния, США</span>
                         <span class="lang-en">California, USA</span>
                     </div>
+                    
                 </div>
             </div>
             
@@ -699,6 +1104,15 @@
                     <span class="lang-ru">Проекты</span>
                     <span class="lang-en">Projects</span>
                 </div>
+                
+                <div class="tab" data-tab="pricing">
+                    <span class="lang-ru">Цены</span>
+                    <span class="lang-en">Pricing</span>
+                </div>
+                <div class="tab" data-tab="faq">
+                    <span class="lang-ru">FAQ</span>
+                    <span class="lang-en">FAQ</span>
+                </div>
                 <div class="tab" data-tab="contact">
                     <span class="lang-ru">Контакты</span>
                     <span class="lang-en">Contact</span>
@@ -706,6 +1120,29 @@
             </div>
             
             <div class="tab-content active" id="about">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">6+</div>
+                        <div class="stat-label lang-ru">Проектов</div>
+                        <div class="stat-label lang-en">Projects</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label lang-ru">Пользователей</div>
+                        <div class="stat-label lang-en">Users</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">2+</div>
+                        <div class="stat-label lang-ru">Года опыта</div>
+                        <div class="stat-label lang-en">Years exp.</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label lang-ru">Поддержка</div>
+                        <div class="stat-label lang-en">Support</div>
+                    </div>
+                </div>
+
                 <div class="lang-ru">
                     <p class="about">
                         Привет! Я Full-Stack разработчик с фокусом на создании высококачественных веб-приложений.
@@ -797,77 +1234,80 @@
                         <h3><a href="https://t.me/MyProekt01" target="_blank" style="text-decoration: none; color: var(--primary-color);">Мои проекты</a></h3>
                         <p>Все мои нынешние и будущие проекты находятся и будут находиться в <a href="https://t.me/MyProekt01" target="_blank">данной группе</a></p>
                     </div>
+
+                    <div class="filter-container">
+                        <button class="filter-btn active" data-filter="all">Все</button>
+                        <button class="filter-btn" data-filter="Python">Python</button>
+                        <button class="filter-btn" data-filter="Roblox">Roblox</button>
+                        <button class="filter-btn" data-filter="Telegram">Telegram</button>
+                        <button class="filter-btn" data-filter="Automation">Automation</button>
+                    </div>
+
                     <div class="projects">
-                        <div class="project-card">
+                        <div class="project-card" data-tech="Python,Telegram,Roblox" data-icon="🔍" data-link="https://t.me/+PImBGoaEOKJjY2Ey" data-title="CHECKER PLASE ROBLOX" data-desc="Лучший чекер в своей сфере для платформы Roblox. Инновационное решение для проверки данных, находится в активной разработке.">
+                            <span class="project-status status-active">Active</span>
+                            <div class="project-icon">🔍</div>
                             <a href="https://t.me/+PImBGoaEOKJjY2Ey" class="project-title" target="_blank">CHECKER PLASE ROBLOX</a>
-                            <div class="project-desc">
-                                Лучший чекер в своей сфере для платформы Roblox. Инновационное решение для проверки данных, находится в активной разработке. Скоро выйдет BETA версия с расширенным функционалом.
-                            </div>
+                            <div class="project-desc">Лучший чекер в своей сфере для платформы Roblox. Инновационное решение для проверки данных.</div>
                             <div class="project-tech">
                                 <span class="tech-tag">Python</span>
                                 <span class="tech-tag">Telegram API</span>
                                 <span class="tech-tag">Roblox API</span>
-                                <span class="tech-tag">API Integration</span>
                             </div>
                         </div>
-                        <div class="project-card">
+                        <div class="project-card" data-tech="Python,Roblox" data-icon="🔐" data-link="https://t.me/+6C3fZKBUC4xiNDVi" data-title="BRUT ROBLOX ACCOUNT" data-desc="Специализированная программа для автоматизации подбора паролей для аккаунтов Roblox. Многопоточное решение.">
+                            <span class="project-status status-active">Active</span>
+                            <div class="project-icon">🔐</div>
                             <a href="https://t.me/+6C3fZKBUC4xiNDVi" class="project-title" target="_blank">BRUT ROBLOX ACCOUNT</a>
-                            <div class="project-desc">
-                                Специализированная программа для автоматизации подбора паролей для аккаунтов Roblox. Многопоточное решение с гибкими настройками и высокой производительностью.
-                            </div>
+                            <div class="project-desc">Специализированная программа для автоматизации подбора паролей. Многопоточное решение.</div>
                             <div class="project-tech">
                                 <span class="tech-tag">Python</span>
                                 <span class="tech-tag">Multi-threading</span>
                                 <span class="tech-tag">Roblox API</span>
-                                <span class="tech-tag">Security</span>
                             </div>
                         </div>
-                        <div class="project-card">
+                        <div class="project-card" data-tech="Python,Telegram" data-icon="⚔️" data-link="https://t.me/+OMOVcz0B5TJmYzc6" data-title="Duel - Telegram Bot" data-desc="Уникальный бот с системой дуэлей для Telegram. Увлекательный игровой опыт с соревновательным элементом.">
+                            <span class="project-status status-active">Active</span>
+                            <div class="project-icon">⚔️</div>
                             <a href="https://t.me/+OMOVcz0B5TJmYzc6" class="project-title" target="_blank">Duel - Telegram Bot</a>
-                            <div class="project-desc">
-                                Уникальный бот с системой дуэлей для Telegram. Предоставляет пользователям увлекательный игровой опыт с соревновательным элементом и системой рейтингов.
-                            </div>
+                            <div class="project-desc">Уникальный бот с системой дуэлей для Telegram. Игровой опыт с системой рейтингов.</div>
                             <div class="project-tech">
                                 <span class="tech-tag">Python</span>
                                 <span class="tech-tag">Telegram Bot API</span>
                                 <span class="tech-tag">Game Mechanics</span>
-                                <span class="tech-tag">Rating System</span>
                             </div>
                         </div>
-                        <div class="project-card">
+                        <div class="project-card" data-tech="Python,Automation" data-icon="📱" data-link="https://t.me/+bHikU2R1VU5kOTI6" data-title="AutoSMS" data-desc="Автоматизированная система для отправки и управления SMS-сообщениями. Массовая рассылка и шаблоны.">
+                            <span class="project-status status-active">Active</span>
+                            <div class="project-icon">📱</div>
                             <a href="https://t.me/+bHikU2R1VU5kOTI6" class="project-title" target="_blank">AutoSMS</a>
-                            <div class="project-desc">
-                                Автоматизированная система для отправки и управления SMS-сообщениями. Позволяет настраивать массовую рассылку, создавать шаблоны и отслеживать статус доставки.
-                            </div>
+                            <div class="project-desc">Автоматизированная система для отправки SMS. Массовая рассылка и шаблоны.</div>
                             <div class="project-tech">
                                 <span class="tech-tag">Python</span>
                                 <span class="tech-tag">Twilio API</span>
-                                <span class="tech-tag">SMS Gateway</span>
                                 <span class="tech-tag">Automation</span>
                             </div>
                         </div>
-                        <div class="project-card">
+                        <div class="project-card" data-tech="Python,Roblox,Automation" data-icon="📈" data-link="https://t.me/+ТВОЯ_ССЫЛКА_1" data-title="Roblox Tools - Boost Followers" data-desc="Мощный инструмент для накрутки подписчиков на Roblox. Поддержка прокси и многопоточность.">
+                            <span class="project-status status-active">Active</span>
+                            <div class="project-icon">📈</div>
                             <a href="https://t.me/+ТВОЯ_ССЫЛКА_1" class="project-title" target="_blank">Roblox Tools - Boost Followers</a>
-                            <div class="project-desc">
-                                Мощный инструмент для накрутки подписчиков на платформе Roblox. Автоматизированное решение с поддержкой прокси, многопоточностью и умным обходом защиты.
-                            </div>
+                            <div class="project-desc">Мощный инструмент для накрутки подписчиков на Roblox с поддержкой прокси.</div>
                             <div class="project-tech">
                                 <span class="tech-tag">Python</span>
                                 <span class="tech-tag">Roblox API</span>
                                 <span class="tech-tag">Proxy Support</span>
-                                <span class="tech-tag">Multi-threading</span>
                             </div>
                         </div>
-                        <div class="project-card">
+                        <div class="project-card" data-tech="Python,Automation" data-icon="🎮" data-link="https://t.me/+ТВОЯ_ССЫЛКА_2" data-title="Auto Registration PSN" data-desc="Автоматическая система регистрации аккаунтов PlayStation Network. Поддержка капчи и прокси.">
+                            <span class="project-status status-active">Active</span>
+                            <div class="project-icon">🎮</div>
                             <a href="https://t.me/+ТВОЯ_ССЫЛКА_2" class="project-title" target="_blank">Auto Registration PSN</a>
-                            <div class="project-desc">
-                                Автоматическая система регистрации аккаунтов PlayStation Network. Поддержка капчи, генерация уникальных данных, работа с прокси и экспорт готовых аккаунтов.
-                            </div>
+                            <div class="project-desc">Автоматическая регистрация аккаунтов PlayStation Network с поддержкой капчи.</div>
                             <div class="project-tech">
                                 <span class="tech-tag">Python</span>
                                 <span class="tech-tag">Selenium</span>
                                 <span class="tech-tag">Captcha Solver</span>
-                                <span class="tech-tag">PSN API</span>
                             </div>
                         </div>
                     </div>
@@ -877,78 +1317,198 @@
                         <h3><a href="https://t.me/MyProekt01" target="_blank" style="text-decoration: none; color: var(--primary-color);">My Projects</a></h3>
                         <p>All my current and future projects are and will be located in <a href="https://t.me/MyProekt01" target="_blank">this group</a></p>
                     </div>
+
+                    <div class="filter-container">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="Python">Python</button>
+                        <button class="filter-btn" data-filter="Roblox">Roblox</button>
+                        <button class="filter-btn" data-filter="Telegram">Telegram</button>
+                        <button class="filter-btn" data-filter="Automation">Automation</button>
+                    </div>
+
                     <div class="projects">
-                        <div class="project-card">
+                        <div class="project-card" data-tech="Python,Telegram,Roblox" data-icon="🔍" data-link="https://t.me/+PImBGoaEOKJjY2Ey" data-title="CHECKER PLASE ROBLOX" data-desc="The best checker for Roblox platform. Innovative data verification solution in active development.">
+                            <span class="project-status status-active">Active</span>
+                            <div class="project-icon">🔍</div>
                             <a href="https://t.me/+PImBGoaEOKJjY2Ey" class="project-title" target="_blank">CHECKER PLASE ROBLOX</a>
-                            <div class="project-desc">
-                                The best checker in its field for the Roblox platform. An innovative solution for data verification, currently in active development. BETA version with expanded functionality coming soon.
-                            </div>
+                            <div class="project-desc">The best checker for Roblox platform. Innovative data verification solution.</div>
                             <div class="project-tech">
                                 <span class="tech-tag">Python</span>
                                 <span class="tech-tag">Telegram API</span>
                                 <span class="tech-tag">Roblox API</span>
-                                <span class="tech-tag">API Integration</span>
                             </div>
                         </div>
-                        <div class="project-card">
+                        <div class="project-card" data-tech="Python,Roblox" data-icon="🔐" data-link="https://t.me/+6C3fZKBUC4xiNDVi" data-title="BRUT ROBLOX ACCOUNT" data-desc="Specialized program for automated password selection. Multi-threaded solution.">
+                            <span class="project-status status-active">Active</span>
+                            <div class="project-icon">🔐</div>
                             <a href="https://t.me/+6C3fZKBUC4xiNDVi" class="project-title" target="_blank">BRUT ROBLOX ACCOUNT</a>
-                            <div class="project-desc">
-                                Specialized program for automating password selection for Roblox accounts. A multi-threaded solution with flexible settings and high performance.
-                            </div>
+                            <div class="project-desc">Specialized program for automated password selection. Multi-threaded solution.</div>
                             <div class="project-tech">
                                 <span class="tech-tag">Python</span>
                                 <span class="tech-tag">Multi-threading</span>
                                 <span class="tech-tag">Roblox API</span>
-                                <span class="tech-tag">Security</span>
                             </div>
                         </div>
-                        <div class="project-card">
+                        <div class="project-card" data-tech="Python,Telegram" data-icon="⚔️" data-link="https://t.me/+OMOVcz0B5TJmYzc6" data-title="Duel - Telegram Bot" data-desc="Unique bot with duel system for Telegram. Gaming experience with rating system.">
+                            <span class="project-status status-active">Active</span>
+                            <div class="project-icon">⚔️</div>
                             <a href="https://t.me/+OMOVcz0B5TJmYzc6" class="project-title" target="_blank">Duel - Telegram Bot</a>
-                            <div class="project-desc">
-                                Unique bot with a duel system for Telegram. Provides users with an exciting gaming experience with a competitive element and rating system.
-                            </div>
+                            <div class="project-desc">Unique bot with duel system for Telegram. Gaming experience with ratings.</div>
                             <div class="project-tech">
                                 <span class="tech-tag">Python</span>
                                 <span class="tech-tag">Telegram Bot API</span>
                                 <span class="tech-tag">Game Mechanics</span>
-                                <span class="tech-tag">Rating System</span>
                             </div>
                         </div>
-                        <div class="project-card">
+                        <div class="project-card" data-tech="Python,Automation" data-icon="📱" data-link="https://t.me/+bHikU2R1VU5kOTI6" data-title="AutoSMS" data-desc="Automated system for sending SMS messages. Mass messaging and templates.">
+                            <span class="project-status status-active">Active</span>
+                            <div class="project-icon">📱</div>
                             <a href="https://t.me/+bHikU2R1VU5kOTI6" class="project-title" target="_blank">AutoSMS</a>
-                            <div class="project-desc">
-                                Automated system for sending and managing SMS messages. Allows setting up mass messaging, creating templates, and tracking delivery status.
-                            </div>
+                            <div class="project-desc">Automated system for sending SMS. Mass messaging and templates.</div>
                             <div class="project-tech">
                                 <span class="tech-tag">Python</span>
                                 <span class="tech-tag">Twilio API</span>
-                                <span class="tech-tag">SMS Gateway</span>
                                 <span class="tech-tag">Automation</span>
                             </div>
                         </div>
-                        <div class="project-card">
+                        <div class="project-card" data-tech="Python,Roblox,Automation" data-icon="📈" data-link="https://t.me/+ТВОЯ_ССЫЛКА_1" data-title="Roblox Tools - Boost Followers" data-desc="Powerful tool for boosting followers on Roblox. Proxy support and multi-threading.">
+                            <span class="project-status status-active">Active</span>
+                            <div class="project-icon">📈</div>
                             <a href="https://t.me/+ТВОЯ_ССЫЛКА_1" class="project-title" target="_blank">Roblox Tools - Boost Followers</a>
-                            <div class="project-desc">
-                                Powerful tool for boosting followers on the Roblox platform. Automated solution with proxy support, multi-threading, and smart protection bypass.
-                            </div>
+                            <div class="project-desc">Powerful tool for boosting followers on Roblox with proxy support.</div>
                             <div class="project-tech">
                                 <span class="tech-tag">Python</span>
                                 <span class="tech-tag">Roblox API</span>
                                 <span class="tech-tag">Proxy Support</span>
-                                <span class="tech-tag">Multi-threading</span>
                             </div>
                         </div>
-                        <div class="project-card">
+                        <div class="project-card" data-tech="Python,Automation" data-icon="🎮" data-link="https://t.me/+ТВОЯ_ССЫЛКА_2" data-title="Auto Registration PSN" data-desc="Automated PlayStation Network account registration. Captcha and proxy support.">
+                            <span class="project-status status-active">Active</span>
+                            <div class="project-icon">🎮</div>
                             <a href="https://t.me/+ТВОЯ_ССЫЛКА_2" class="project-title" target="_blank">Auto Registration PSN</a>
-                            <div class="project-desc">
-                                Automated PlayStation Network account registration system. Captcha support, unique data generation, proxy integration, and ready account export.
-                            </div>
+                            <div class="project-desc">Automated PlayStation Network account registration with captcha support.</div>
                             <div class="project-tech">
                                 <span class="tech-tag">Python</span>
                                 <span class="tech-tag">Selenium</span>
                                 <span class="tech-tag">Captcha Solver</span>
-                                <span class="tech-tag">PSN API</span>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+
+            <div class="tab-content" id="pricing">
+                <div class="pricing-grid">
+                    <div class="pricing-card popular">
+                        <div class="pricing-name lang-ru">Базовый</div>
+                        <div class="pricing-name lang-en">Basic</div>
+                        <div class="pricing-price">$100</div>
+                        <div class="pricing-period lang-ru">за проект</div>
+                        <div class="pricing-period lang-en">per project</div>
+                        <ul class="pricing-features">
+                            <li class="lang-ru">Простой скрипт</li>
+                            <li class="lang-en">Simple script</li>
+                            <li class="lang-ru">До 3 дней</li>
+                            <li class="lang-en">Up to 3 days</li>
+                            <li class="lang-ru">1 ревизия</li>
+                            <li class="lang-en">1 revision</li>
+                        </ul>
+                        <a href="https://t.me/HelloDebugger" class="pricing-btn" target="_blank">
+                            <span class="lang-ru">Заказать</span>
+                            <span class="lang-en">Order</span>
+                        </a>
+                    </div>
+                    <div class="pricing-card">
+                        <div class="pricing-name lang-ru">Стандарт</div>
+                        <div class="pricing-name lang-en">Standard</div>
+                        <div class="pricing-price">$250</div>
+                        <div class="pricing-period lang-ru">за проект</div>
+                        <div class="pricing-period lang-en">per project</div>
+                        <ul class="pricing-features">
+                            <li class="lang-ru">Средний проект</li>
+                            <li class="lang-en">Medium project</li>
+                            <li class="lang-ru">До 7 дней</li>
+                            <li class="lang-en">Up to 7 days</li>
+                            <li class="lang-ru">3 ревизии</li>
+                            <li class="lang-en">3 revisions</li>
+                            <li class="lang-ru">Поддержка 14 дней</li>
+                            <li class="lang-en">14 days support</li>
+                        </ul>
+                        <a href="https://t.me/HelloDebugger" class="pricing-btn" target="_blank">
+                            <span class="lang-ru">Заказать</span>
+                            <span class="lang-en">Order</span>
+                        </a>
+                    </div>
+                    <div class="pricing-card">
+                        <div class="pricing-name lang-ru">Премиум</div>
+                        <div class="pricing-name lang-en">Premium</div>
+                        <div class="pricing-price">$500+</div>
+                        <div class="pricing-period lang-ru">за проект</div>
+                        <div class="pricing-period lang-en">per project</div>
+                        <ul class="pricing-features">
+                            <li class="lang-ru">Сложный проект</li>
+                            <li class="lang-en">Complex project</li>
+                            <li class="lang-ru">Индивид. сроки</li>
+                            <li class="lang-en">Custom timeline</li>
+                            <li class="lang-ru">Безлимит ревизий</li>
+                            <li class="lang-en">Unlimited revisions</li>
+                            <li class="lang-ru">Поддержка 30 дней</li>
+                            <li class="lang-en">30 days support</li>
+                        </ul>
+                        <a href="https://t.me/HelloDebugger" class="pricing-btn" target="_blank">
+                            <span class="lang-ru">Заказать</span>
+                            <span class="lang-en">Order</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="faq">
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span class="lang-ru">Как сделать заказ?</span>
+                            <span class="lang-en">How to place an order?</span>
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <span class="lang-ru">Напишите мне в Telegram (<a href="https://t.me/HelloDebugger" target="_blank" style="color: var(--primary-color); text-decoration: none; font-weight: 500;">@HelloDebugger</a>), опишите задачу и мы обсудим детали и сроки.</span>
+                            <span class="lang-en">Contact me on Telegram (<a href="https://t.me/HelloDebugger" target="_blank" style="color: var(--primary-color); text-decoration: none; font-weight: 500;">@HelloDebugger</a>), describe your task and we'll discuss details and timeline.</span>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span class="lang-ru">Какие способы оплаты?</span>
+                            <span class="lang-en">What payment methods?</span>
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <span class="lang-ru">Криптовалюта (BTC, ETH, USDT), банковский перевод, PayPal и другие по договорённости.</span>
+                            <span class="lang-en">Cryptocurrency (BTC, ETH, USDT), bank transfer, PayPal and others by agreement.</span>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span class="lang-ru">Есть ли гарантия?</span>
+                            <span class="lang-en">Is there a warranty?</span>
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <span class="lang-ru">Да, предоставляю гарантию на все работы. Срок гарантии зависит от выбранного тарифа.</span>
+                            <span class="lang-en">Yes, I provide warranty for all work. Warranty period depends on the chosen plan.</span>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span class="lang-ru">Работаете ли вы с NDA?</span>
+                            <span class="lang-en">Do you work with NDA?</span>
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <span class="lang-ru">Да, готов подписать NDA для конфиденциальных проектов.</span>
+                            <span class="lang-en">Yes, I'm ready to sign an NDA for confidential projects.</span>
                         </div>
                     </div>
                 </div>
@@ -958,12 +1518,15 @@
                 <div class="contact-links">
                     <a href="https://t.me/HelloDebugger" class="contact-link" target="_blank">
                         <i>📱</i> @HelloDebugger
+                        <button class="copy-btn" onclick="event.preventDefault(); copyToClipboard('@HelloDebugger')">📋</button>
                     </a>
                     <a href="https://t.me/HiDebugger" class="contact-link" target="_blank">
                         <i>💬</i> @HiDebugger
+                        <button class="copy-btn" onclick="event.preventDefault(); copyToClipboard('@HiDebugger')">📋</button>
                     </a>
                     <a href="https://t.me/Debugger4" class="contact-link" target="_blank">
                         <i>🔧</i> @Debugger4
+                        <button class="copy-btn" onclick="event.preventDefault(); copyToClipboard('@Debugger4')">📋</button>
                     </a>
                     <a href="https://t.me/MyProekt01" class="contact-link" target="_blank">
                         <i>📁</i> 
@@ -981,6 +1544,90 @@
     </div>
 
     <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').classList.add('hidden');
+            }, 800);
+        });
+
+        
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const lang = document.body.getAttribute('data-lang');
+                showToast(lang === 'ru' ? 'Скопировано!' : 'Copied!');
+            });
+        }
+
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        function openModal(icon, title, desc, link) {
+            document.getElementById('modalIcon').textContent = icon;
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalDesc').textContent = desc;
+            document.getElementById('modalLink').href = link;
+            document.getElementById('projectModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('projectModal').classList.remove('active');
+        }
+
+        document.getElementById('projectModal').addEventListener('click', (e) => {
+            if (e.target.id === 'projectModal') closeModal();
+        });
+
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                if (!e.target.classList.contains('project-title')) {
+                    const icon = card.dataset.icon;
+                    const title = card.dataset.title;
+                    const desc = card.dataset.desc;
+                    const link = card.dataset.link;
+                    openModal(icon, title, desc, link);
+                }
+            });
+        });
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const filter = btn.dataset.filter;
+                const container = btn.closest('.lang-ru, .lang-en');
+                container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                container.querySelectorAll('.project-card').forEach(card => {
+                    if (filter === 'all' || card.dataset.tech.includes(filter)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.addEventListener('click', () => {
+                q.parentElement.classList.toggle('active');
+            });
+        });
+
         function generateParticles() {
             const background = document.getElementById('background');
             const particleCount = 15;
@@ -997,12 +1644,7 @@
                 const yMove = Math.random() * 40 - 20;
                 particle.style.animation = `moveParticle${i} ${duration}s infinite alternate ease-in-out`;
                 particle.style.opacity = Math.random() * 0.2 + 0.1;
-                const keyframes = `
-                    @keyframes moveParticle${i} {
-                        0% { transform: translate(0, 0); }
-                        100% { transform: translate(${xMove}vw, ${yMove}vh); }
-                    }
-                `;
+                const keyframes = `@keyframes moveParticle${i} { 0% { transform: translate(0, 0); } 100% { transform: translate(${xMove}vw, ${yMove}vh); } }`;
                 const style = document.createElement('style');
                 style.textContent = keyframes;
                 document.head.appendChild(style);
@@ -1021,12 +1663,7 @@
                 column.style.left = `${i * 25}px`;
                 column.style.animation = `fallDown${i} ${speed}s infinite linear`;
                 column.style.animationDelay = `${Math.random() * 5}s`;
-                const keyframes = `
-                    @keyframes fallDown${i} {
-                        0% { transform: translateY(-100%); }
-                        100% { transform: translateY(${window.innerHeight}px); }
-                    }
-                `;
+                const keyframes = `@keyframes fallDown${i} { 0% { transform: translateY(-100%); } 100% { transform: translateY(${window.innerHeight}px); } }`;
                 const style = document.createElement('style');
                 style.textContent = keyframes;
                 document.head.appendChild(style);
@@ -1066,9 +1703,7 @@
         function createRippleEffect(e) {
             const tab = e.currentTarget;
             const ripples = tab.getElementsByClassName('ripple');
-            for (let i = 0; i < ripples.length; i++) {
-                tab.removeChild(ripples[i]);
-            }
+            for (let i = 0; i < ripples.length; i++) { tab.removeChild(ripples[i]); }
             const ripple = document.createElement('span');
             ripple.className = 'ripple';
             tab.appendChild(ripple);
@@ -1107,14 +1742,10 @@
                 if (tabId === 'projects') animateProjects();
             });
             tab.addEventListener('mouseenter', () => {
-                if (!tab.classList.contains('active')) {
-                    tab.style.transform = 'translateY(-2px)';
-                }
+                if (!tab.classList.contains('active')) { tab.style.transform = 'translateY(-2px)'; }
             });
             tab.addEventListener('mouseleave', () => {
-                if (!tab.classList.contains('active')) {
-                    tab.style.transform = 'translateY(0)';
-                }
+                if (!tab.classList.contains('active')) { tab.style.transform = 'translateY(0)'; }
             });
         });
         
@@ -1139,31 +1770,25 @@
                 langButtons.forEach(btn => btn.classList.remove('active'));
                 button.classList.add('active');
                 document.body.setAttribute('data-lang', lang);
-                if (lang === 'ru') {
-                    document.title = 'Профиль разработчика';
-                } else {
-                    document.title = 'Developer Profile';
-                }
+                document.title = lang === 'ru' ? 'Профиль разработчика' : 'Developer Profile';
                 updateTabIndicator();
             });
         });
         
         window.addEventListener('resize', () => { updateTabIndicator(); });
         
-        window.addEventListener('load', () => {
-            generateParticles();
-            generateMatrix();
-            animateSkills();
-            animateProjects();
-            updateTabIndicator();
-            tabs.forEach((tab, index) => {
-                tab.style.opacity = '0';
-                tab.style.transform = 'translateY(10px)';
-                setTimeout(() => {
-                    tab.style.opacity = '1';
-                    tab.style.transform = 'translateY(0)';
-                }, 200 + index * 100);
-            });
+        generateParticles();
+        generateMatrix();
+        animateSkills();
+        animateProjects();
+        updateTabIndicator();
+        tabs.forEach((tab, index) => {
+            tab.style.opacity = '0';
+            tab.style.transform = 'translateY(10px)';
+            setTimeout(() => {
+                tab.style.opacity = '1';
+                tab.style.transform = 'translateY(0)';
+            }, 200 + index * 100);
         });
     </script>
 </body>
