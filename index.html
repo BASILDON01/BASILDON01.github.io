@@ -988,6 +988,18 @@
             color: var(--text-color);
         }
 
+        .review-name-link {
+            font-weight: 600;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .review-name-link:hover {
+            text-decoration: underline;
+            opacity: 0.8;
+        }
+
         .review-rating {
             color: #fbbf24;
             font-size: 14px;
@@ -1659,10 +1671,14 @@
                     <div class="review-form" id="reviewForm">
                         <div class="form-group">
                             <label>
-                                <span class="lang-ru">Ваше имя</span>
-                                <span class="lang-en">Your Name</span>
+                                <span class="lang-ru">Ваш Telegram</span>
+                                <span class="lang-en">Your Telegram</span>
                             </label>
-                            <input type="text" id="reviewName" placeholder="John D." maxlength="30">
+                            <input type="text" id="reviewName" placeholder="@username" maxlength="33">
+                            <small style="opacity: 0.6; font-size: 12px; margin-top: 5px; display: block;">
+                                <span class="lang-ru">Другие смогут связаться с вами для подтверждения отзыва</span>
+                                <span class="lang-en">Others can contact you to verify the review</span>
+                            </small>
                         </div>
                         <div class="form-group">
                             <label>
@@ -2042,17 +2058,29 @@
                 return;
             }
 
-            const name = document.getElementById('reviewName').value.trim();
+            let username = document.getElementById('reviewName').value.trim();
             const text = document.getElementById('reviewText').value.trim();
 
-            if (!name || !text) {
+            if (!username || !text) {
                 showToast(document.body.getAttribute('data-lang') === 'ru' ? 'Заполните все поля' : 'Fill all fields');
+                return;
+            }
+
+            // Добавляем @ если нет
+            if (!username.startsWith('@')) {
+                username = '@' + username;
+            }
+
+            // Валидация username (только буквы, цифры, подчёркивания, 5-32 символа после @)
+            const usernameRegex = /^@[a-zA-Z][a-zA-Z0-9_]{4,31}$/;
+            if (!usernameRegex.test(username)) {
+                showToast(document.body.getAttribute('data-lang') === 'ru' ? 'Неверный формат username' : 'Invalid username format');
                 return;
             }
 
             try {
                 await db.collection('reviews').add({
-                    name: name,
+                    name: username,
                     text: text,
                     rating: selectedRating,
                     date: new Date().toISOString(),
@@ -2078,7 +2106,7 @@
                         <div class="review-author">
                             <div class="review-avatar">A</div>
                             <div class="review-info">
-                                <div class="review-name">Alex K.</div>
+                                <a href="https://t.me/AlexK_example" target="_blank" class="review-name-link">@AlexK_example</a>
                                 <div class="review-rating">⭐⭐⭐⭐⭐</div>
                             </div>
                         </div>
@@ -2088,7 +2116,7 @@
                         <div class="review-author">
                             <div class="review-avatar">M</div>
                             <div class="review-info">
-                                <div class="review-name">Mike S.</div>
+                                <a href="https://t.me/MikeS_example" target="_blank" class="review-name-link">@MikeS_example</a>
                                 <div class="review-rating">⭐⭐⭐⭐⭐</div>
                             </div>
                         </div>
@@ -2098,7 +2126,7 @@
                         <div class="review-author">
                             <div class="review-avatar">D</div>
                             <div class="review-info">
-                                <div class="review-name">Denis P.</div>
+                                <a href="https://t.me/DenisP_example" target="_blank" class="review-name-link">@DenisP_example</a>
                                 <div class="review-rating">⭐⭐⭐⭐⭐</div>
                             </div>
                         </div>
@@ -2119,13 +2147,17 @@
                 snapshot.forEach(doc => {
                     const r = doc.data();
                     const stars = '⭐'.repeat(r.rating);
+                    const username = r.name.startsWith('@') ? r.name : '@' + r.name;
+                    const telegramLink = 'https://t.me/' + username.substring(1);
+                    const firstLetter = username.charAt(1).toUpperCase();
+                    
                     container.innerHTML += `
                         <div class="review-card">
                             <p class="review-text">${r.text}</p>
                             <div class="review-author">
-                                <div class="review-avatar">${r.name.charAt(0).toUpperCase()}</div>
+                                <div class="review-avatar">${firstLetter}</div>
                                 <div class="review-info">
-                                    <div class="review-name">${r.name}</div>
+                                    <a href="${telegramLink}" target="_blank" class="review-name-link">${username}</a>
                                     <div class="review-rating">${stars}</div>
                                 </div>
                             </div>
