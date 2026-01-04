@@ -43,7 +43,6 @@
             padding: 20px 0;
         }
         
-        /* Анимированный фон */
         .animated-background {
             position: fixed;
             top: 0;
@@ -62,7 +61,6 @@
             filter: blur(5px);
         }
         
-        /* Матричный эффект */
         .matrix-code {
             position: fixed;
             top: 0;
@@ -136,7 +134,7 @@
             justify-content: center;
             font-size: 18px;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Тень для кнопки */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
         
         .theme-toggle:hover {
@@ -147,15 +145,15 @@
         .language-switcher {
             display: flex;
             align-items: center;
-            background-color: rgba(255, 255, 255, 0.9); /* Увеличена непрозрачность */
+            background-color: rgba(255, 255, 255, 0.9);
             border-radius: 30px;
             padding: 5px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-            border: 1px solid rgba(0, 0, 0, 0.1); /* Добавлена рамка */
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
         
         [data-theme="dark"] .language-switcher {
-            background-color: rgba(31, 41, 55, 0.9); /* Тёмный фон для тёмной темы */
+            background-color: rgba(31, 41, 55, 0.9);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
@@ -175,81 +173,7 @@
             background-color: var(--primary-color);
             color: white;
             opacity: 1;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Тень для активной кнопки */
-        }transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Добавлена тень */
-        }
-        
-        .theme-toggle:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 15px var(--primary-color);
-        }
-
-        .language-switcher {
-            display: flex;
-            align-items: center;
-            background-color: rgba(255, 255, 255, 0.9); /* Больше непрозрачности */
-            border-radius: 30px;
-            padding: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-            border: 1px solid rgba(0, 0, 0, 0.1); /* Добавлена рамка */
-        }
-        
-        [data-theme="dark"] .language-switcher {
-            background-color: rgba(31, 41, 55, 0.9); /* Тёмный фон для тёмной темы */
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .lang-btn {
-            padding: 5px 10px;
-            border: none;
-            background: none;
-            color: var(--text-color);
-            cursor: pointer;
-            border-radius: 20px;
-            font-weight: 500;
-            opacity: 0.7;
-            transition: all 0.3s ease;
-        }
-        
-        .lang-btn.active {
-            background-color: var(--primary-color);
-            color: white;
-            opacity: 1;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Тень для активной кнопки */
-        }transition: all 0.3s ease;
-        }
-        
-        .theme-toggle:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 15px var(--primary-color);
-        }
-
-        .language-switcher {
-            display: flex;
-            align-items: center;
-            background-color: var(--bg-color);
-            border-radius: 30px;
-            padding: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        
-        .lang-btn {
-            padding: 5px 10px;
-            border: none;
-            background: none;
-            color: var(--text-color);
-            cursor: pointer;
-            border-radius: 20px;
-            font-weight: 500;
-            opacity: 0.7;
-            transition: all 0.3s ease;
-        }
-        
-        .lang-btn.active {
-            background-color: var(--primary-color);
-            color: white;
-            opacity: 1;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         .header {
@@ -347,7 +271,6 @@
             margin-right: 5px;
         }
         
-        /* АНИМИРОВАННЫЕ ТАБЫ - НАЧАЛО */
         .tabs {
             display: flex;
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -355,7 +278,6 @@
             position: relative;
         }
         
-        /* Индикатор активной вкладки */
         .tab-indicator {
             position: absolute;
             height: 2px;
@@ -377,14 +299,12 @@
             transform-origin: center bottom;
         }
         
-        /* Анимация при наведении */
         .tab:hover {
             opacity: 1;
             color: var(--primary-color);
             transform: translateY(-2px);
         }
         
-        /* Эффект волны при клике */
         .tab .ripple {
             position: absolute;
             background: rgba(37, 99, 235, 0.2);
@@ -413,11 +333,9 @@
             60% {transform: translateY(-4px);}
         }
         
-        /* Полностью отключаем стандартное подчеркивание активного таба */
         .tab.active::after {
             display: none;
         }
-        /* АНИМИРОВАННЫЕ ТАБЫ - КОНЕЦ */
         
         .tab-content {
             display: none;
@@ -636,7 +554,6 @@
             opacity: 0.7;
         }
         
-        /* Подсветка фона */
         .glow {
             position: fixed;
             border-radius: 50%;
@@ -658,7 +575,6 @@
             }
         }
 
-        /* Языковые элементы */
         [data-lang="en"] .lang-ru,
         [data-lang="ru"] .lang-en {
             display: none;
@@ -669,7 +585,6 @@
                 padding: 10px;
             }
             
-            /* Исправление позиционирования контролов на мобильных */
             .controls {
                 position: relative;
                 top: 0;
@@ -684,7 +599,7 @@
                 flex-direction: column;
                 align-items: center;
                 text-align: center;
-                margin-top: 10px; /* Добавлен отступ сверху */
+                margin-top: 10px;
             }
             
             .avatar {
@@ -692,29 +607,26 @@
                 margin-bottom: 20px;
             }
             
-            /* Улучшенные стили для адаптивных табов на мобильных */
             .tabs {
                 overflow-x: auto;
                 white-space: nowrap;
                 padding-bottom: 5px;
-                justify-content: flex-start; /* Изменено с center на flex-start */
+                justify-content: flex-start;
                 width: 100%;
-                scrollbar-width: none; /* Скрываем полосу прокрутки в Firefox */
-                -ms-overflow-style: none; /* Скрываем полосу прокрутки в IE/Edge */
+                scrollbar-width: none;
+                -ms-overflow-style: none;
             }
             
-            /* Скрываем полосу прокрутки в Chrome/Safari */
             .tabs::-webkit-scrollbar {
                 display: none;
             }
             
             .tab {
                 flex: 0 0 auto;
-                padding: 10px 15px; /* Уменьшаем отступы для мобильных */
-                font-size: 14px; /* Уменьшаем размер шрифта */
+                padding: 10px 15px;
+                font-size: 14px;
             }
             
-            /* Гарантируем, что индикатор активной вкладки правильно позиционируется */
             .tab-indicator {
                 bottom: 0;
                 height: 2px;
@@ -729,7 +641,6 @@
             }
         }
         
-        /* Дополнительные стили для очень маленьких экранов */
         @media (max-width: 380px) {
             .tab {
                 padding: 8px 12px;
@@ -743,13 +654,8 @@
     </style>
 </head>
 <body data-lang="ru">
-    <!-- Анимированный фон -->
     <div class="animated-background" id="background"></div>
-    
-    <!-- Матричный эффект -->
     <div class="matrix-code" id="matrix"></div>
-    
-    <!-- Подсветка фона -->
     <div class="glow" style="width:300px; height:300px; top:20%; left:20%;"></div>
     <div class="glow" style="width:250px; height:250px; bottom:20%; right:20%; background-color: var(--accent-color);"></div>
     
@@ -780,9 +686,7 @@
             </div>
             
             <div class="tabs">
-                <!-- Индикатор активной вкладки (добавлен) -->
                 <div class="tab-indicator"></div>
-                
                 <div class="tab active" data-tab="about">
                     <span class="lang-ru">О себе</span>
                     <span class="lang-en">About</span>
@@ -802,7 +706,6 @@
             </div>
             
             <div class="tab-content active" id="about">
-                <!-- Русская версия -->
                 <div class="lang-ru">
                     <p class="about">
                         Привет! Я Full-Stack разработчик с фокусом на создании высококачественных веб-приложений.
@@ -819,8 +722,6 @@
                         чтобы оставаться на передовой в быстро меняющемся мире разработки.
                     </p>
                 </div>
-                
-                <!-- Английская версия -->
                 <div class="lang-en">
                     <p class="about">
                         Hello! I'm a Full-Stack Developer focused on creating high-quality web applications. 
@@ -840,7 +741,6 @@
             </div>
             
             <div class="tab-content" id="skills">
-                <!-- Русская версия -->
                 <div class="lang-ru">
                     <h3 style="margin-bottom: 15px;">Технические навыки</h3>
                     <div class="skill-set">
@@ -859,15 +759,12 @@
                         <div class="skill">AWS</div>
                         <div class="skill">TensorFlow</div>
                     </div>
-                    
                     <h3 style="margin-bottom: 15px; margin-top: 25px;">Иностранные языки</h3>
                     <div class="skill-set">
                         <div class="skill">Русский (родной)</div>
                         <div class="skill">Английский (C1)</div>
                     </div>
                 </div>
-                
-                <!-- Английская версия -->
                 <div class="lang-en">
                     <h3 style="margin-bottom: 15px;">Technical Skills</h3>
                     <div class="skill-set">
@@ -886,7 +783,6 @@
                         <div class="skill">AWS</div>
                         <div class="skill">TensorFlow</div>
                     </div>
-                    
                     <h3 style="margin-bottom: 15px; margin-top: 25px;">Languages</h3>
                     <div class="skill-set">
                         <div class="skill">Russian (Native)</div>
@@ -896,13 +792,11 @@
             </div>
             
             <div class="tab-content" id="projects">
-                <!-- Русская версия информации о группе проектов -->
                 <div class="lang-ru">
                     <div class="projects-header">
                         <h3><a href="https://t.me/MyProekt01" target="_blank" style="text-decoration: none; color: var(--primary-color);">Мои проекты</a></h3>
                         <p>Все мои нынешние и будущие проекты находятся и будут находиться в <a href="https://t.me/MyProekt01" target="_blank">данной группе</a></p>
                     </div>
-                    
                     <div class="projects">
                         <div class="project-card">
                             <a href="https://t.me/+PImBGoaEOKJjY2Ey" class="project-title" target="_blank">CHECKER PLASE ROBLOX</a>
@@ -916,7 +810,6 @@
                                 <span class="tech-tag">API Integration</span>
                             </div>
                         </div>
-                        
                         <div class="project-card">
                             <a href="https://t.me/+6C3fZKBUC4xiNDVi" class="project-title" target="_blank">BRUT ROBLOX ACCOUNT</a>
                             <div class="project-desc">
@@ -929,7 +822,6 @@
                                 <span class="tech-tag">Security</span>
                             </div>
                         </div>
-                        
                         <div class="project-card">
                             <a href="https://t.me/+OMOVcz0B5TJmYzc6" class="project-title" target="_blank">Duel - Telegram Bot</a>
                             <div class="project-desc">
@@ -942,7 +834,6 @@
                                 <span class="tech-tag">Rating System</span>
                             </div>
                         </div>
-                        
                         <div class="project-card">
                             <a href="https://t.me/+bHikU2R1VU5kOTI6" class="project-title" target="_blank">AutoSMS</a>
                             <div class="project-desc">
@@ -955,16 +846,37 @@
                                 <span class="tech-tag">Automation</span>
                             </div>
                         </div>
+                        <div class="project-card">
+                            <a href="https://t.me/+ТВОЯ_ССЫЛКА_1" class="project-title" target="_blank">Roblox Tools - Boost Followers</a>
+                            <div class="project-desc">
+                                Мощный инструмент для накрутки подписчиков на платформе Roblox. Автоматизированное решение с поддержкой прокси, многопоточностью и умным обходом защиты.
+                            </div>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Roblox API</span>
+                                <span class="tech-tag">Proxy Support</span>
+                                <span class="tech-tag">Multi-threading</span>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <a href="https://t.me/+ТВОЯ_ССЫЛКА_2" class="project-title" target="_blank">Auto Registration PSN</a>
+                            <div class="project-desc">
+                                Автоматическая система регистрации аккаунтов PlayStation Network. Поддержка капчи, генерация уникальных данных, работа с прокси и экспорт готовых аккаунтов.
+                            </div>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Selenium</span>
+                                <span class="tech-tag">Captcha Solver</span>
+                                <span class="tech-tag">PSN API</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
-                <!-- Английская версия информации о группе проектов -->
                 <div class="lang-en">
                     <div class="projects-header">
                         <h3><a href="https://t.me/MyProekt01" target="_blank" style="text-decoration: none; color: var(--primary-color);">My Projects</a></h3>
                         <p>All my current and future projects are and will be located in <a href="https://t.me/MyProekt01" target="_blank">this group</a></p>
                     </div>
-                
                     <div class="projects">
                         <div class="project-card">
                             <a href="https://t.me/+PImBGoaEOKJjY2Ey" class="project-title" target="_blank">CHECKER PLASE ROBLOX</a>
@@ -978,7 +890,6 @@
                                 <span class="tech-tag">API Integration</span>
                             </div>
                         </div>
-                        
                         <div class="project-card">
                             <a href="https://t.me/+6C3fZKBUC4xiNDVi" class="project-title" target="_blank">BRUT ROBLOX ACCOUNT</a>
                             <div class="project-desc">
@@ -991,7 +902,6 @@
                                 <span class="tech-tag">Security</span>
                             </div>
                         </div>
-                        
                         <div class="project-card">
                             <a href="https://t.me/+OMOVcz0B5TJmYzc6" class="project-title" target="_blank">Duel - Telegram Bot</a>
                             <div class="project-desc">
@@ -1004,7 +914,6 @@
                                 <span class="tech-tag">Rating System</span>
                             </div>
                         </div>
-                        
                         <div class="project-card">
                             <a href="https://t.me/+bHikU2R1VU5kOTI6" class="project-title" target="_blank">AutoSMS</a>
                             <div class="project-desc">
@@ -1017,14 +926,44 @@
                                 <span class="tech-tag">Automation</span>
                             </div>
                         </div>
+                        <div class="project-card">
+                            <a href="https://t.me/+ТВОЯ_ССЫЛКА_1" class="project-title" target="_blank">Roblox Tools - Boost Followers</a>
+                            <div class="project-desc">
+                                Powerful tool for boosting followers on the Roblox platform. Automated solution with proxy support, multi-threading, and smart protection bypass.
+                            </div>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Roblox API</span>
+                                <span class="tech-tag">Proxy Support</span>
+                                <span class="tech-tag">Multi-threading</span>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <a href="https://t.me/+ТВОЯ_ССЫЛКА_2" class="project-title" target="_blank">Auto Registration PSN</a>
+                            <div class="project-desc">
+                                Automated PlayStation Network account registration system. Captcha support, unique data generation, proxy integration, and ready account export.
+                            </div>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Selenium</span>
+                                <span class="tech-tag">Captcha Solver</span>
+                                <span class="tech-tag">PSN API</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             
             <div class="tab-content" id="contact">
                 <div class="contact-links">
-                    <a href="https://t.me/Basildon01" class="contact-link" target="_blank">
-                        <i>📱</i> @Basildon01
+                    <a href="https://t.me/HelloDebugger" class="contact-link" target="_blank">
+                        <i>📱</i> @HelloDebugger
+                    </a>
+                    <a href="https://t.me/HiDebugger" class="contact-link" target="_blank">
+                        <i>💬</i> @HiDebugger
+                    </a>
+                    <a href="https://t.me/Debugger4" class="contact-link" target="_blank">
+                        <i>🔧</i> @Debugger4
                     </a>
                     <a href="https://t.me/MyProekt01" class="contact-link" target="_blank">
                         <i>📁</i> 
@@ -1042,99 +981,69 @@
     </div>
 
     <script>
-        // Генерация фоновых частиц
         function generateParticles() {
             const background = document.getElementById('background');
             const particleCount = 15;
-            
             for (let i = 0; i < particleCount; i++) {
                 const size = Math.random() * 100 + 50;
                 const particle = document.createElement('div');
-                
                 particle.className = 'particle';
                 particle.style.width = `${size}px`;
                 particle.style.height = `${size}px`;
                 particle.style.left = `${Math.random() * 100}%`;
                 particle.style.top = `${Math.random() * 100}%`;
-                
-                // Анимация для каждой частицы
                 const duration = Math.random() * 15 + 10;
                 const xMove = Math.random() * 40 - 20;
                 const yMove = Math.random() * 40 - 20;
-                
                 particle.style.animation = `moveParticle${i} ${duration}s infinite alternate ease-in-out`;
                 particle.style.opacity = Math.random() * 0.2 + 0.1;
-                
-                // Создаем уникальную анимацию для каждой частицы
                 const keyframes = `
                     @keyframes moveParticle${i} {
-                        0% {
-                            transform: translate(0, 0);
-                        }
-                        100% {
-                            transform: translate(${xMove}vw, ${yMove}vh);
-                        }
+                        0% { transform: translate(0, 0); }
+                        100% { transform: translate(${xMove}vw, ${yMove}vh); }
                     }
                 `;
-                
                 const style = document.createElement('style');
                 style.textContent = keyframes;
                 document.head.appendChild(style);
-                
                 background.appendChild(particle);
             }
         }
         
-        // Генерация матричного эффекта
         function generateMatrix() {
             const matrix = document.getElementById('matrix');
             const columnCount = Math.floor(window.innerWidth / 25);
-            
             for (let i = 0; i < columnCount; i++) {
                 const column = document.createElement('div');
                 column.className = 'code-column';
-                
                 const height = Math.floor(Math.random() * 20) + 5;
                 const speed = Math.random() * 10 + 5;
-                
                 column.style.left = `${i * 25}px`;
                 column.style.animation = `fallDown${i} ${speed}s infinite linear`;
                 column.style.animationDelay = `${Math.random() * 5}s`;
-                
-                // Создаем уникальную анимацию падения для каждой колонки
                 const keyframes = `
                     @keyframes fallDown${i} {
-                        0% {
-                            transform: translateY(-100%);
-                        }
-                        100% {
-                            transform: translateY(${window.innerHeight}px);
-                        }
+                        0% { transform: translateY(-100%); }
+                        100% { transform: translateY(${window.innerHeight}px); }
                     }
                 `;
-                
                 const style = document.createElement('style');
                 style.textContent = keyframes;
                 document.head.appendChild(style);
-                
-                // Добавляем символы
                 for (let j = 0; j < height; j++) {
                     const char = document.createElement('div');
                     char.textContent = Math.random() > 0.5 ? '1' : '0';
                     column.appendChild(char);
                 }
-                
                 matrix.appendChild(column);
             }
         }
         
-        // Анимации для элементов навыков
         function animateSkills() {
             const skills = document.querySelectorAll('.skill');
             skills.forEach((skill, index) => {
                 skill.style.opacity = '0';
                 skill.style.transform = 'translateY(20px)';
-                
                 setTimeout(() => {
                     skill.style.opacity = '1';
                     skill.style.transform = 'translateY(0)';
@@ -1142,13 +1051,11 @@
             });
         }
         
-        // Анимации для карточек проектов
         function animateProjects() {
             const projects = document.querySelectorAll('.project-card');
             projects.forEach((project, index) => {
                 project.style.opacity = '0';
                 project.style.transform = 'translateY(20px)';
-                
                 setTimeout(() => {
                     project.style.opacity = '1';
                     project.style.transform = 'translateY(0)';
@@ -1156,109 +1063,54 @@
             });
         }
         
-        // НОВАЯ ФУНКЦИЯ: Создание волнового эффекта при нажатии на таб
         function createRippleEffect(e) {
             const tab = e.currentTarget;
-            
-            // Удаляем существующие волны
             const ripples = tab.getElementsByClassName('ripple');
             for (let i = 0; i < ripples.length; i++) {
                 tab.removeChild(ripples[i]);
             }
-            
-            // Создаем новую волну
             const ripple = document.createElement('span');
             ripple.className = 'ripple';
             tab.appendChild(ripple);
-            
-            // Позиционируем волну относительно точки нажатия
             const rect = tab.getBoundingClientRect();
             const size = Math.max(rect.width, rect.height) * 1.5;
             ripple.style.width = ripple.style.height = `${size}px`;
             ripple.style.left = `${e.clientX - rect.left - size / 2}px`;
             ripple.style.top = `${e.clientY - rect.top - size / 2}px`;
-            
-            // Удаляем волну после анимации
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
+            setTimeout(() => { ripple.remove(); }, 600);
         }
         
-        // НОВАЯ ФУНКЦИЯ: Обновление индикатора активной вкладки
         function updateTabIndicator() {
             const activeTab = document.querySelector('.tab.active');
             const tabIndicator = document.querySelector('.tab-indicator');
-            
             if (activeTab && tabIndicator) {
                 const rect = activeTab.getBoundingClientRect();
                 const parentRect = activeTab.parentElement.getBoundingClientRect();
-                
                 tabIndicator.style.width = `${rect.width}px`;
                 tabIndicator.style.left = `${rect.left - parentRect.left}px`;
             }
         }
         
-        // Модифицированное переключение между вкладками с анимациями
         const tabs = document.querySelectorAll('.tab');
         const tabContents = document.querySelectorAll('.tab-content');
         
         tabs.forEach(tab => {
-            // Добавляем обработчик для эффекта волны
             tab.addEventListener('click', createRippleEffect);
-            
             tab.addEventListener('click', () => {
-                // Получаем идентификатор вкладки
                 const tabId = tab.getAttribute('data-tab');
-                
-                // Если это не вкладка проектов, выполняем стандартное переключение
-                if (tabId !== 'projects') {
-                    // Удаляем активный класс со всех вкладок
-                    tabs.forEach(t => t.classList.remove('active'));
-                    // Добавляем активный класс выбранной вкладке
-                    tab.classList.add('active');
-                    
-                    // Обновляем позицию индикатора
-                    updateTabIndicator();
-                    
-                    // Удаляем активный класс со всех контентов
-                    tabContents.forEach(content => content.classList.remove('active'));
-                    
-                    // Добавляем активный класс соответствующему контенту
-                    document.getElementById(tabId).classList.add('active');
-                    
-                    // Анимируем содержимое вкладки
-                    if (tabId === 'skills') {
-                        animateSkills();
-                    }
-                }
-                // Если это вкладка проектов, показываем содержимое без перехода по ссылке
-                else {
-                    // Удаляем активный класс со всех вкладок
-                    tabs.forEach(t => t.classList.remove('active'));
-                    // Добавляем активный класс выбранной вкладке
-                    tab.classList.add('active');
-                    
-                    // Обновляем позицию индикатора
-                    updateTabIndicator();
-                    
-                    // Удаляем активный класс со всех контентов
-                    tabContents.forEach(content => content.classList.remove('active'));
-                    
-                    // Добавляем активный класс соответствующему контенту
-                    document.getElementById(tabId).classList.add('active');
-                    
-                    // Анимируем проекты
-                    animateProjects();
-                }
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                updateTabIndicator();
+                tabContents.forEach(content => content.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
+                if (tabId === 'skills') animateSkills();
+                if (tabId === 'projects') animateProjects();
             });
-            
-            // Добавляем эффекты при наведении
             tab.addEventListener('mouseenter', () => {
                 if (!tab.classList.contains('active')) {
                     tab.style.transform = 'translateY(-2px)';
                 }
             });
-            
             tab.addEventListener('mouseleave', () => {
                 if (!tab.classList.contains('active')) {
                     tab.style.transform = 'translateY(0)';
@@ -1266,10 +1118,8 @@
             });
         });
         
-        // Переключение темы (с добавлением обновления индикатора)
         const themeToggle = document.getElementById('themeToggle');
         let isDarkTheme = false;
-        
         themeToggle.addEventListener('click', () => {
             isDarkTheme = !isDarkTheme;
             if (isDarkTheme) {
@@ -1279,57 +1129,36 @@
                 document.body.removeAttribute('data-theme');
                 themeToggle.textContent = '🌙';
             }
-            
-            // Добавляем обновление индикатора при смене темы
             updateTabIndicator();
         });
         
-        // Переключение языка (с добавлением обновления индикатора)
         const langButtons = document.querySelectorAll('.lang-btn');
-        
         langButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const lang = button.getAttribute('data-lang');
-                
-                // Обновляем активную кнопку
                 langButtons.forEach(btn => btn.classList.remove('active'));
                 button.classList.add('active');
-                
-                // Обновляем язык на странице
                 document.body.setAttribute('data-lang', lang);
-                
-                // Обновляем название вкладки браузера
                 if (lang === 'ru') {
                     document.title = 'Профиль разработчика';
                 } else {
                     document.title = 'Developer Profile';
                 }
-                
-                // Добавляем обновление индикатора при смене языка
                 updateTabIndicator();
             });
         });
         
-        // Обработка изменения размера окна
-        window.addEventListener('resize', () => {
-            updateTabIndicator();
-        });
+        window.addEventListener('resize', () => { updateTabIndicator(); });
         
-        // Модифицированная инициализация
         window.addEventListener('load', () => {
             generateParticles();
             generateMatrix();
             animateSkills();
             animateProjects();
-            
-            // Инициализация индикатора активной вкладки
             updateTabIndicator();
-            
-            // Анимация появления табов при загрузке
             tabs.forEach((tab, index) => {
                 tab.style.opacity = '0';
                 tab.style.transform = 'translateY(10px)';
-                
                 setTimeout(() => {
                     tab.style.opacity = '1';
                     tab.style.transform = 'translateY(0)';
