@@ -455,6 +455,24 @@
             opacity: 1;
         }
 
+        .reset-theme-btn {
+            width: 100%;
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(var(--primary-rgb), 0.1);
+            border: 1px solid var(--card-border);
+            color: var(--text-color);
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .reset-theme-btn:hover {
+            background: rgba(var(--primary-rgb), 0.2);
+            border-color: var(--primary-color);
+        }
+
         .language-switcher {
             display: flex;
             background: rgba(var(--primary-rgb), 0.2);
@@ -1418,6 +1436,10 @@
                             <button class="mode-btn active" data-mode="dark">🌙 Dark</button>
                             <button class="mode-btn" data-mode="light">☀️ Light</button>
                         </div>
+                        <button class="reset-theme-btn" onclick="resetTheme()">
+                            <span class="lang-ru">↺ Сбросить</span>
+                            <span class="lang-en">↺ Reset</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1824,12 +1846,13 @@
     <script>
         // ========== FIREBASE CONFIG ==========
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT.firebaseapp.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT.appspot.com",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
+            apiKey: "AIzaSyAdZM-T6cBvfyDrhfVn1cyt9pG93rCkyfE",
+            authDomain: "reviews-system-82e7f.firebaseapp.com",
+            projectId: "reviews-system-82e7f",
+            storageBucket: "reviews-system-82e7f.firebasestorage.app",
+            messagingSenderId: "1023866516696",
+            appId: "1:1023866516696:web:cdc607cbcd522a0122d3ad",
+            measurementId: "G-X4KC585Z5X"
         };
 
         let db = null;
@@ -1906,6 +1929,16 @@
                 document.body.setAttribute('data-theme', btn.dataset.mode);
             });
         });
+
+        function resetTheme() {
+            document.body.setAttribute('data-color', 'blue');
+            document.body.setAttribute('data-theme', 'dark');
+            document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector('.color-btn[data-color="blue"]').classList.add('active');
+            document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector('.mode-btn[data-mode="dark"]').classList.add('active');
+            showToast(document.body.getAttribute('data-lang') === 'ru' ? '✓ Тема сброшена' : '✓ Theme reset');
+        }
 
         // ========== MODAL ==========
         function openModal(icon, title, desc, link) {
